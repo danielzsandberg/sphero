@@ -1,0 +1,12 @@
+{
+  "fileTypes": [
+    "orbas"
+  ],
+  "name": "OrbBasic",
+  "scopeName": "source.orbbasic",
+  "patterns":[
+    {
+      "include": "source.freebasic"
+    }
+  ]
+}
