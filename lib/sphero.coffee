@@ -1,5 +1,7 @@
 SpheroView = require './sphero-view'
 {CompositeDisposable} = require 'atom'
+apd = require 'atom-package-dependencies'
+
 
 module.exports = Sphero =
   spheroView: null
@@ -7,6 +9,7 @@ module.exports = Sphero =
   subscriptions: null
 
   activate: (state) ->
+    apd.install()
     @spheroView = new SpheroView(state.spheroViewState)
     @modalPanel = atom.workspace.addModalPanel(item: @spheroView.getElement(), visible: false)
 
