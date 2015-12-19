@@ -2,19 +2,19 @@
 'context-menu':
   'atom-text-editor': [
     {
-      'label': 'Toggle sphero'
-      'command': 'sphero:toggle'
+      'label': 'Upload and Execute OrbBasic Program'
+      'command': 'sphero:uploadAndExecute'
     }
   ]
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'sphero ball'
+      'label': 'Sphero'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'sphero:toggle'
+          'label': 'Upload and Execute Program'
+          'command': 'sphero:uploadAndExecute'
         }
       ]
     ]

@@ -1,36 +1,24 @@
-SpheroView = require './sphero-view'
 {CompositeDisposable} = require 'atom'
 apd = require 'atom-package-dependencies'
 
 
 module.exports = Sphero =
-  spheroView: null
-  modalPanel: null
   subscriptions: null
 
   activate: (state) ->
     apd.install()
-    @spheroView = new SpheroView(state.spheroViewState)
-    @modalPanel = atom.workspace.addModalPanel(item: @spheroView.getElement(), visible: false)
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
 
     # Register command that toggles this view
-    @subscriptions.add atom.commands.add 'atom-workspace', 'sphero:toggle': => @toggle()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'sphero:uploadAndExecute': => @uploadAndExecute()
 
   deactivate: ->
-    @modalPanel.destroy()
     @subscriptions.dispose()
-    @spheroView.destroy()
 
   serialize: ->
     spheroViewState: @spheroView.serialize()
 
-  toggle: ->
+  uploadAndExecute: ->
     console.log 'Sphero was toggled!'
-
-    if @modalPanel.isVisible()
-      @modalPanel.hide()
-    else
-      @modalPanel.show()
