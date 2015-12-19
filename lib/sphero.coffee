@@ -2,6 +2,7 @@
 apd = require 'atom-package-dependencies'
 
 
+
 module.exports = Sphero =
   subscriptions: null
 
@@ -21,4 +22,22 @@ module.exports = Sphero =
     spheroViewState: @spheroView.serialize()
 
   uploadAndExecute: ->
-    console.log 'Sphero was toggled!'
+    activeEditor = atom.workspace.getActiveTextEditor()
+    code = activeEditor.getText()
+    code = code.replace "\n", "\r"
+
+    sphero = require 'sphero'
+    orb = sphero("/dev/tty.Sphero-WRP-AMP-SPP")
+    console.log "Connecting to Sphero..."
+    orb.connect(->
+      console.log "Connected to Sphero!"
+      orb.eraseOrbBasicStorage(0x00, (err, data) ->
+        if err
+          console.log "There was a problem erasing OrbBasic Storage. Error:\n#{err}";
+        else
+          if data.MRSP == 0x00
+            console.log "Deleted local Orb Basic Storage"
+          else
+            console.log "There was a problem erasing OrbBasic Storage. Packet:\n#{data}"
+        )
+      )
